@@ -87,7 +87,10 @@ function getCurrentMaze() {
     return mazePatterns[patternIndex];
 }
 
+
 let round = 1;
+
+
 let maze = JSON.parse(JSON.stringify(getCurrentMaze()));
 
 // Game state
@@ -100,6 +103,7 @@ let ghosts = [
 ];
 let score = 0;
 let lives = 3;
+let round = 1;
 let totalDots = 0;
 let powerMode = 0;
 let powerModeStartTime = 0;
@@ -181,6 +185,10 @@ function startPowerMusic() {
         const notes = [523, 659, 784, 1047]; // C5, E5, G5, C6
         let noteIndex = 0;
 
+        // Catchy power-up jingle
+        const notes = [523, 659, 784, 1047]; // C5, E5, G5, C6
+        let noteIndex = 0;
+
         function playNote() {
             if (noteIndex < notes.length) {
                 const oscillator = ctx.createOscillator();
@@ -215,6 +223,8 @@ function spawnBonusFruit() {
     for (let row = 0; row < ROWS; row++) {
         for (let col = 0; col < COLS; col++) {
             // Avoid ghost base area (center 4x4 area)
+
+            if (maze[row][col] === 2 && !(row === pacman.y && col === pacman.x) &&
             if (maze[row][col] === 2 && !(row === pacman.y && col === pacman.x) &&
                 !(row >= 8 && row <= 11 && col >= 8 && col <= 11)) {
                 emptySpots.push({x: col, y: row});
@@ -242,9 +252,17 @@ document.addEventListener('keyup', (e) => {
 function updatePacman() {
     if (!gameRunning || gameState !== 'playing' || Date.now() - lastMoveTime < MOVE_DELAY) return;
 
+
     let newX = pacman.x;
     let newY = pacman.y;
     let moved = false;
+
+
+
+    let newX = pacman.x;
+    let newY = pacman.y;
+    let moved = false;
+
 
     if (keys['ArrowUp'] || keys['w'] || keys['W']) {
         newY = pacman.y - 1;
@@ -264,7 +282,13 @@ function updatePacman() {
         moved = true;
     }
 
+
     if (!moved) return;
+
+
+
+    if (!moved) return;
+
 
     // Handle tunnel wrapping
     if (newY === 9 && newX < 0) {
@@ -273,11 +297,19 @@ function updatePacman() {
         newX = 0;
     }
 
+
+
+
+
     // Check boundaries and walls
     if (newX >= 0 && newX < COLS && newY >= 0 && newY < ROWS && maze[newY][newX] !== 1) {
         pacman.x = newX;
         pacman.y = newY;
         lastMoveTime = Date.now();
+
+
+
+
 
         // Collect items
         if (maze[newY][newX] === 0) {
@@ -297,6 +329,10 @@ function updatePacman() {
             sounds.powerPellet();
         }
 
+
+
+
+
         // Collect bonus fruit
         if (bonusFruit && bonusFruit.x === newX && bonusFruit.y === newY) {
             score += bonusFruit.points;
@@ -304,9 +340,17 @@ function updatePacman() {
             bonusFruit = null;
         }
 
+
         updateScore();
         checkWin();
     }
+
+
+
+        updateScore();
+        checkWin();
+    }
+
 
     // Check collision with ghosts after movement
     checkGhostCollisions();
@@ -315,11 +359,21 @@ function updatePacman() {
 function updateGhosts() {
     if (!gameRunning || gameState !== 'playing' || Date.now() - lastGhostMoveTime < MOVE_DELAY * 2) return;
 
+
     lastGhostMoveTime = Date.now();
 
     ghosts.forEach(ghost => {
         const directions = ['up', 'down', 'left', 'right'];
         let validMoves = [];
+
+
+
+    lastGhostMoveTime = Date.now();
+
+    ghosts.forEach(ghost => {
+        const directions = ['up', 'down', 'left', 'right'];
+        let validMoves = [];
+
 
         directions.forEach(dir => {
             let newX = ghost.x, newY = ghost.y;
@@ -328,6 +382,10 @@ function updateGhosts() {
             else if (dir === 'left') newX--;
             else if (dir === 'right') newX++;
 
+
+
+
+
             // Handle tunnel wrapping for ghosts
             if (newY === 9 && newX < 0) {
                 newX = COLS - 1;
@@ -335,10 +393,18 @@ function updateGhosts() {
                 newX = 0;
             }
 
+
+
+
+
             if (newX >= 0 && newX < COLS && newY >= 0 && newY < ROWS && maze[newY][newX] !== 1) {
                 validMoves.push({dir, x: newX, y: newY});
             }
         });
+
+
+
+
 
         if (validMoves.length > 0) {
             const move = validMoves[Math.floor(Math.random() * validMoves.length)];
@@ -346,6 +412,10 @@ function updateGhosts() {
             ghost.y = move.y;
             ghost.direction = move.dir;
         }
+
+
+
+
 
         // Check collision with Pacman
         if (ghost.x === pacman.x && ghost.y === pacman.y) {
@@ -373,8 +443,15 @@ function updateGhosts() {
         }
     });
 
+
     // Check collision with ghosts after ghost movement
     checkGhostCollisions();
+
+
+
+    // Check collision with ghosts after ghost movement
+    checkGhostCollisions();
+
 
     if (powerMode > 0) {
         const elapsed = Date.now() - powerModeStartTime;
@@ -387,6 +464,10 @@ function updateGhosts() {
             sounds.powerEnd();
         }
     }
+
+
+
+
 
     // Update bonus fruit
     if (bonusFruit) {
@@ -406,6 +487,10 @@ function checkWin() {
             if (maze[row][col] === 0 || maze[row][col] === 3) dotsLeft++;
         }
     }
+
+
+
+
 
     if (dotsLeft === 0) {
         round++;
@@ -429,6 +514,10 @@ function drawMaze() {
         for (let col = 0; col < COLS; col++) {
             const x = col * CELL_SIZE;
             const y = row * CELL_SIZE;
+
+
+
+
 
             if (maze[row][col] === 1) {
                 // Wall
@@ -456,6 +545,10 @@ function drawPacman() {
     const y = pacman.y * CELL_SIZE + CELL_SIZE/2;
     const radius = CELL_SIZE/2 - 2;
 
+
+
+
+
     if (gameState === 'dying' && deathAnimation > 0) {
         // Death animation - shrinking circle
         const shrinkFactor = deathAnimation / 60;
@@ -467,12 +560,23 @@ function drawPacman() {
         return;
     }
 
+
     ctx.fillStyle = '#ff0';
     ctx.beginPath();
 
     // Draw Pacman with mouth based on direction
     let startAngle = 0;
     let endAngle = Math.PI * 2;
+
+
+
+    ctx.fillStyle = '#ff0';
+    ctx.beginPath();
+
+    // Draw Pacman with mouth based on direction
+    let startAngle = 0;
+    let endAngle = Math.PI * 2;
+
 
     switch(pacman.direction) {
         case 'right':
@@ -493,9 +597,17 @@ function drawPacman() {
             break;
     }
 
+
     ctx.arc(x, y, radius, startAngle, endAngle);
     ctx.lineTo(x, y);
     ctx.fill();
+
+
+
+    ctx.arc(x, y, radius, startAngle, endAngle);
+    ctx.lineTo(x, y);
+    ctx.fill();
+
 
     // Cyberpunk glasses
     ctx.fillStyle = '#00ffff';
@@ -503,6 +615,10 @@ function drawPacman() {
     ctx.fillRect(x + 4, y - 8, 8, 4);
     ctx.fillStyle = '#0080ff';
     ctx.fillRect(x - 2, y - 6, 4, 1);
+
+
+
+
 
     // Lens glow effect
     ctx.fillStyle = 'rgba(0, 255, 255, 0.3)';
@@ -516,6 +632,10 @@ function drawGhosts() {
         const y = ghost.y * CELL_SIZE + CELL_SIZE/2;
         const radius = CELL_SIZE/2 - 2;
 
+
+
+
+
         let ghostColor = ghost.color;
         if (powerMode > 0 && ghost.scared) {
             // Blink when power mode is about to end
@@ -527,10 +647,18 @@ function drawGhosts() {
             }
         }
 
+
+
+
+
         ctx.fillStyle = ghostColor;
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
         ctx.fill();
+
+
+
+
 
         // Eyes
         ctx.fillStyle = '#fff';
@@ -544,8 +672,15 @@ function drawGhosts() {
 function drawBonusFruit() {
     if (!bonusFruit) return;
 
+
     const x = bonusFruit.x * CELL_SIZE + CELL_SIZE/2;
     const y = bonusFruit.y * CELL_SIZE + CELL_SIZE/2;
+
+
+
+    const x = bonusFruit.x * CELL_SIZE + CELL_SIZE/2;
+    const y = bonusFruit.y * CELL_SIZE + CELL_SIZE/2;
+
 
     ctx.fillStyle = bonusFruit.color;
     if (bonusFruit.name === 'saxophone') {
@@ -577,6 +712,10 @@ function getBackgroundColors() {
 function drawLevelArtwork() {
     const levelType = (round - 1) % 8;
 
+
+
+
+
     switch(levelType) {
         case 0: // Cyberpunk 2077
             // Neon skyscrapers
@@ -591,10 +730,18 @@ function drawLevelArtwork() {
                 {x: 550, width: 35, height: 170, color: '#16213e'}
             ];
 
+
+
+
+
             buildings.forEach((building, i) => {
                 // Building base
                 ctx.fillStyle = building.color;
                 ctx.fillRect(building.x, 600 - building.height, building.width, building.height);
+
+
+
+
 
                 // Animated neon windows
                 const windowRows = Math.floor(building.height / 25);
@@ -602,6 +749,10 @@ function drawLevelArtwork() {
                     for (let col = 0; col < Math.floor(building.width / 12); col++) {
                         const windowX = building.x + col * 12 + 3;
                         const windowY = 600 - building.height + row * 25 + 5;
+
+
+
+
 
                         // Flickering effect
                         const flicker = Math.sin(animationFrame * 0.1 + i + row + col) > 0.3;
@@ -613,6 +764,10 @@ function drawLevelArtwork() {
                     }
                 }
 
+
+
+
+
                 // Neon building outlines
                 ctx.strokeStyle = '#00ffff';
                 ctx.lineWidth = 1;
@@ -621,18 +776,33 @@ function drawLevelArtwork() {
                 ctx.globalAlpha = 1;
             });
 
+
+
+
+
             // Flying cars/drones
             for (let i = 0; i < 3; i++) {
                 const carX = (animationFrame * 2 + i * 200) % 700 - 50;
                 const carY = 300 + Math.sin(animationFrame * 0.02 + i) * 20;
 
+
                 ctx.fillStyle = '#ff0080';
                 ctx.fillRect(carX, carY, 20, 8);
+
+
+
+                ctx.fillStyle = '#ff0080';
+                ctx.fillRect(carX, carY, 20, 8);
+
 
                 // Light trail
                 ctx.fillStyle = 'rgba(255, 0, 128, 0.3)';
                 ctx.fillRect(carX - 30, carY + 2, 30, 4);
             }
+
+
+
+
 
             // Holographic advertisements
             const ads = [
@@ -640,6 +810,10 @@ function drawLevelArtwork() {
                 {x: 300, y: 320, text: 'CYBER', color: '#ff00ff'},
                 {x: 500, y: 380, text: '2077', color: '#ffff00'}
             ];
+
+
+
+
 
             ads.forEach((ad, i) => {
                 const pulse = Math.sin(animationFrame * 0.05 + i) * 0.3 + 0.7;
@@ -650,16 +824,28 @@ function drawLevelArtwork() {
                 ctx.globalAlpha = 1;
             });
 
+
+
+
+
             // Digital rain effect
             for (let i = 0; i < 15; i++) {
                 const rainX = (i * 40 + animationFrame * 0.5) % 600;
                 const rainY = (animationFrame * 3 + i * 50) % 600;
+
+
+
+
 
                 ctx.fillStyle = 'rgba(0, 255, 0, 0.6)';
                 ctx.font = '12px monospace';
                 ctx.fillText(String.fromCharCode(65 + Math.floor(Math.random() * 26)), rainX, rainY);
             }
             break;
+
+
+
+
 
         case 1: // Purple mystical
             // Floating crystals
@@ -675,6 +861,10 @@ function drawLevelArtwork() {
             }
             break;
 
+
+
+
+
         case 2: // Red volcanic
             // Lava bubbles
             for (let i = 0; i < 10; i++) {
@@ -686,6 +876,10 @@ function drawLevelArtwork() {
                 ctx.fill();
             }
             break;
+
+
+
+
 
         case 3: // Blue ocean
             // Waves
@@ -701,6 +895,10 @@ function drawLevelArtwork() {
             ctx.fill();
             break;
 
+
+
+
+
         case 4: // Desert
             // Sand dunes
             ctx.fillStyle = '#daa520';
@@ -712,6 +910,10 @@ function drawLevelArtwork() {
             ctx.lineTo(0, 600);
             ctx.fill();
             break;
+
+
+
+
 
         case 5: // Orange sunset
             // Sun
@@ -729,6 +931,10 @@ function drawLevelArtwork() {
             }
             break;
 
+
+
+
+
         case 6: // Teal underwater
             // Seaweed
             for (let i = 0; i < 8; i++) {
@@ -738,6 +944,10 @@ function drawLevelArtwork() {
                 ctx.fillRect(x + sway, 400, 8, 200);
             }
             break;
+
+
+
+
 
         case 7: // Violet cosmic
             // Planets
@@ -757,6 +967,10 @@ function drawAnimatedBackground() {
     animationFrame++;
     const bgColors = getBackgroundColors();
 
+
+
+
+
     // Base background with subtle pulse
     const pulse = Math.sin(animationFrame * 0.02) * 0.1 + 0.9;
     if (powerMode > 0 && Math.floor(animationFrame / 10) % 2 === 0) {
@@ -767,8 +981,15 @@ function drawAnimatedBackground() {
     }
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+
     // Level-specific artwork
     drawLevelArtwork();
+
+
+
+    // Level-specific artwork
+    drawLevelArtwork();
+
 
     // Animated stars/particles
     stars.forEach(star => {
@@ -777,6 +998,10 @@ function drawAnimatedBackground() {
             star.y = -5;
             star.x = Math.random() * canvas.width;
         }
+
+
+
+
 
         star.brightness = Math.sin(animationFrame * 0.05 + star.x) * 0.5 + 0.5;
         const starColors = ['144, 238, 144', '186, 85, 211', '255, 69, 0', '70, 130, 180', '255, 215, 0', '255, 140, 0', '32, 178, 170', '147, 112, 219'];
@@ -804,18 +1029,34 @@ function drawDeathScreen() {
         return;
     }
 
+
     // Show countdown overlay
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+
+    // Show countdown overlay
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
 
     ctx.fillStyle = '#ff0000';
     ctx.font = '48px Arial';
     ctx.textAlign = 'center';
     ctx.fillText('PACMAN DIED!', canvas.width/2, canvas.height/2 - 50);
 
+
     ctx.fillStyle = '#ffffff';
     ctx.font = '24px Arial';
     ctx.fillText(`Lives Remaining: ${lives}`, canvas.width/2, canvas.height/2);
+
+
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '24px Arial';
+    ctx.fillText(`Lives Remaining: ${lives}`, canvas.width/2, canvas.height/2);
+
 
     const countdown = Math.ceil(deathTimer / 60);
     ctx.fillStyle = '#ffff00';
@@ -826,8 +1067,15 @@ function drawDeathScreen() {
 function gameLoop() {
     if (!gameRunning) return;
 
+
     // Draw animated background
     drawAnimatedBackground();
+
+
+
+    // Draw animated background
+    drawAnimatedBackground();
+
 
     // Handle death state
     if (gameState === 'dying' && lives > 0) {
@@ -849,9 +1097,17 @@ function gameLoop() {
         }
     }
 
+
     // Update game
     updatePacman();
     updateGhosts();
+
+
+
+    // Update game
+    updatePacman();
+    updateGhosts();
+
 
     // Draw everything
     drawMaze();
@@ -861,16 +1117,28 @@ function gameLoop() {
     }
     drawGhosts();
 
+
+
+
+
     // Draw death screen overlay
     if (gameState === 'dying') {
         drawDeathScreen();
     }
+
+
+
+
 
     requestAnimationFrame(gameLoop);
 }
 
 function checkGhostCollisions() {
     if (gameState !== 'playing') return;
+
+
+
+
 
     ghosts.forEach(ghost => {
         if (ghost.x === pacman.x && ghost.y === pacman.y) {

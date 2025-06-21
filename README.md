@@ -29,7 +29,7 @@ A minimal Pacman game built for the AWS Build Games Challenge using HTML5 Canvas
 ## Scoring
 
 - Regular dots = 10 points
-- Power pellets = 50 points
+- Power pellets = 50 points  
 - Eating scared ghosts = 200 points
 - Complete rounds to advance and increase score multiplier
 
@@ -38,5 +38,6 @@ A minimal Pacman game built for the AWS Build Games Challenge using HTML5 Canvas
 - `index.html` - Main game page with canvas setup
 - `game.js` - Core game logic and rendering
 - `README.md` - This documentation
+
 
 Built with ❤️ for the AWS Build Games Challenge!
