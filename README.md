@@ -21,10 +21,10 @@ A minimal Pacman game built for the AWS Build Games Challenge using HTML5 Canvas
 
 ## Game Controls
 
-- ↑ Arrow Up: Move up
-- ↓ Arrow Down: Move down  
-- ← Arrow Left: Move left
-- → Arrow Right: Move right
+- ↑ Arrow Up / W: Move up
+- ↓ Arrow Down / S: Move down
+- ← Arrow Left / A: Move left
+- → Arrow Right / D: Move right
 
 ## Scoring
 
@@ -38,5 +38,6 @@ A minimal Pacman game built for the AWS Build Games Challenge using HTML5 Canvas
 - `index.html` - Main game page with canvas setup
 - `game.js` - Core game logic and rendering
 - `README.md` - This documentation
+
 
 Built with ❤️ for the AWS Build Games Challenge!
