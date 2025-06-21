@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacman Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1e1e2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid #4169e1;
+            background: #000;
+        }
+        .info {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <h1>Pacman 2077</h1>
+            <p style="font-size: 12px; font-style: italic; margin-top: -10px; color: #ccc;">AWS Build Games Challenge 2025: Build Classics with Amazon Q Developer CLI</p>
+            <p>Score: <span id="score">0</span> | Lives: <span id="lives">3</span> | Round: <span id="round">1</span></p>
+            <p>Use Arrow Keys or WASD to Move | Eat Power Pellets to Hunt Ghosts!</p>
+        </div>
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
