@@ -1,6 +1,7 @@
 # Pacman 2077
 
 A minimal Pacman game built for the AWS Build Games Challenge using HTML5 Canvas and JavaScript!
+https://pacman.robo54.com
 
 ## Features
 
