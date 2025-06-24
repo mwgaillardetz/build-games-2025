@@ -43,19 +43,19 @@ Built with ❤️ for the AWS Build Games Challenge!
 
 ======================
 
-🎮 Why I Chose Pac-Man
+## 🎮 Why I Chose Pac-Man
 I picked Pac-Man because it’s one of my favorite classic arcade games. It was inexpensive to play solo, which meant I played it a lot growing up. The nostalgia and the challenge of trying to recreate a timeless favorite made it the perfect choice.
 
-🤖 Prompting Techniques That Worked
+## 🤖 Prompting Techniques That Worked
 To get better results from the AI, I asked it to explain its code like a senior engineer would. This helped me understand the logic behind its decisions and allowed me to troubleshoot more effectively when I hit a wall. It also encouraged me to explore alternate solutions when the initial ones didn’t pan out.
 
-💾 How AI Tackled Classic Game Development
+## 💾 How AI Tackled Classic Game Development
 Using Claude Sonnet 4, I was able to build a near-perfect Pac-Man clone with just two files: index.html and game.js. The AI handled the base logic surprisingly well. I then challenged myself to scale difficulty and improve level dynamics. With everything working smoothly, I containerized the project using Docker and Docker Compose, allowing the game to run reliably across environments.
 
-⚙️ Automation That Saved Time
+## ⚙️ Automation That Saved Time
 What would have taken days of manual coding was condensed into minutes with the help of AI. Claude’s ability to scaffold functional game logic saved hours, letting me focus on polish and deployment.
 
-🛡️ Safe, AI-Generated Code
+## 🛡️ Safe, AI-Generated Code
 The final AI-generated solution was low-risk and secure:
 
 Static files only (HTML/CSS/JS served via NGINX)
