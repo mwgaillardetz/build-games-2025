@@ -2,6 +2,7 @@
 
 A minimal Pacman game built for the AWS Build Games Challenge using HTML5 Canvas and JavaScript!
 https://pacman.robo54.com
+This app was designed and built using Amazon Q as required by the competition. 
 
 ## Features
 
